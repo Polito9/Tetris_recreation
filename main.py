@@ -37,10 +37,8 @@ COUNTER_DELAY = 3
 movement_delay_right = 0
 movement_delay_down = 0
 
-#The current block falling 
+#The current block falling for testing
 block = Block.Block("L", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X+GRID_WIDTH, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
-
-print("The max X is: ", block.max_pos_x)
 
 while running:
     #Handling inputs
@@ -79,6 +77,7 @@ while running:
     #Refresh the screen to move the blocks
     screen.fill(color.BLACK)
 
+    
     #Drawing the mesh
     pos = figureMannager.getPositionsMesh(SIZE_BLOCK, GRID_WIDTH, GRID_HEIGHT, GRID_X, GRID_Y)
     for p in pos:
@@ -86,11 +85,13 @@ while running:
     
     #Draws the figure in the actual position
     pos = figureMannager.getPositions(block.type_, SIZE_BLOCK, block.pos_x, block.pos_y)
+    
+    
     for p in pos:
         #print(p)
         pygame.draw.rect(screen, color.YELLOW, p, 0)
         pygame.draw.rect(screen, color.WHITE, p, 1, 0)
-    
+
     #Updates the display
     pygame.display.update()
 

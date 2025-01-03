@@ -24,7 +24,7 @@ class Block:
     def setPos_x(self, pos_x):
         if(pos_x > self.max_pos_x-self.left_part):
             self.pos_x = self.max_pos_x-self.left_part
-            print("It has leaved the zone")
+            #print("It has leaved the zone")
         else:
             self.pos_x = pos_x
             print(pos_x)
@@ -32,6 +32,6 @@ class Block:
     def setPos_y(self, pos_y):
         if(pos_y> self.max_pos_y):
             self.pos_y = self.max_pos_y
-            print("It has leaved the zone")
+            #print("It has leaved the zone")
         else:
             self.pos_y = pos_y

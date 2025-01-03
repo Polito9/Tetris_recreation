@@ -1,77 +1,32 @@
 class FiguresTetris:
+    directions = {}
+
     def __init__(self):
-        pass
+        figsNames = ['O', 'I', 'J', 'L', 'S', 'T', 'Z']
+        
+        for name in figsNames:
+            self.directions[name] = "figures\\" + name +".txt"
     
     def getPositions(self, type_, size, start_x, start_y):
-        # Returns a list of list of size 4 that are the coordinates of start of the figure to draw and the size
+        # Returns a list of lists with size 4 that are the coordinates of start of the figure to draw and the size
         # This list can be used directly into the draw.rect function of pygame
         positions = []
+        file = open(self.directions[type_])
 
-        if(type_ == 'I'):
-            pos = [start_x, start_y, size, size]
-            positions.append(pos.copy())
-            for i in range(3):
-                pos[1]+=size
-                positions.append(pos.copy())
+        #Reading the file and asigning where the rectangles are going to be drawn
+        pos = [start_x, start_y, size, size]
+        for line in file:#Every line
+            pos[0] = start_x
+
+            for c in line:#Every character in the line
+                if (c == '*'):
+                    positions.append(pos.copy())
+                pos[0]+=size
+
+            pos[1]+=size
         
-        elif(type_ == 'J' or type_ == 'L'):
-            pos = [start_x, start_y, size, size]
-            positions.append(pos.copy())
-            for i in range(2):
-                pos[1]+=size
-                positions.append(pos.copy())
-
-            if(type_ == 'L'):
-                pos = [start_x+size, pos[1], size, size]
-            else:
-                pos = [start_x-size, pos[1], size, size]
-            positions.append(pos.copy())
-
-        elif(type_ == 'Z'):
-            pos = [start_x, start_y, size, size]
-            positions.append(pos.copy())
-            pos = [start_x+size, start_y, size, size]
-            positions.append(pos.copy())
-            pos = [pos[0], start_y+size, size, size]
-            positions.append(pos.copy())
-            pos = [pos[0]+size, pos[1], size, size]
-            positions.append(pos.copy())
-        elif(type_ == 'S'):
-            pos = [start_x, start_y, size, size]
-            positions.append(pos.copy())
-            pos = [start_x+size, start_y, size, size]
-            positions.append(pos.copy())
-            pos = [start_x, start_y+size, size, size]
-            positions.append(pos.copy())
-            pos = [start_x-size, start_y+size, size, size]
-            positions.append(pos.copy())
-        elif(type_ == 'T'):
-            pos = [start_x, start_y, size, size]
-            positions.append(pos.copy())
-            pos = [start_x, start_y+size, size, size]
-            positions.append(pos.copy())
-            pos = [start_x-size, start_y+size, size, size]
-            positions.append(pos.copy())
-            pos = [start_x+size, start_y+size, size, size]
-            positions.append(pos.copy())
-        elif(type_ == 'O'):
-            pos = [start_x, start_y, size, size]
-            positions.append(pos.copy())
-            pos = [start_x+size, start_y+size, size, size]
-            positions.append(pos.copy())
-            pos = [start_x, start_y+size, size, size]
-            positions.append(pos.copy())
-            pos = [start_x+size, start_y, size, size]
-            positions.append(pos.copy())
-        else:
-            try:
-                1/0
-            except:
-                print()
-                print("Oh no, an error ocurred!")
-                print("Detail: No valid figure type to draw")
-                exit(1)
-                
+        file.close()
+        
         return positions
 
     def getPositionsMesh(self, size, width, height, start_x, start_y):
