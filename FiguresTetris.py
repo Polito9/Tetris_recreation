@@ -22,66 +22,59 @@ class FiguresTetris:
         file.close()
 
         #Managing the rotation of the piece by changing how the matrix of the file is readed
-
         r = (len(matrix))
         c = (len(matrix[0]))-1 #Because it detects another character in every line
         print(r, c)
         
-        #The indicators of where to begin and end
+        #The indicators of where to begin and end the loops
         begin_i, end_i = 0, 0
         begin_j, end_j = 0, 0
         increase_i = 1
         increase_j = 1
 
-        if(rotation == 0 or rotation == 2):
-            if(rotation == 0):
-                begin_i = 0
-                end_i = r
-                begin_j = 0
-                end_j = c
-            else:
-                begin_i = r-1
-                end_i = -1
-                begin_j = c-1
-                end_j = -1
-                increase_i = -1
-                increase_j = -1
+        if(rotation == 0):
+            begin_i = 0
+            end_i = r
+            begin_j = 0
+            end_j = c
+        elif(rotation == 2):
+            begin_i = r-1
+            end_i = -1
+            begin_j = c-1
+            end_j = -1
+            increase_i = -1
+            increase_j = -1
+        elif(rotation == 1):
+            begin_i = 0
+            end_i = c
+            begin_j = r-1
+            end_j = -1
+            increase_j = -1
+        elif(rotation == 3):
+            begin_i = c-1
+            end_i = -1
+            increase_i = -1
+            begin_j = 0
+            end_j = r
+        
+        valid = False
+        for i in range(begin_i, end_i, increase_i):
+            pos[0] = start_x
 
-            for i in range(begin_i, end_i, increase_i):
-                pos[0] = start_x
+            for j in range(begin_j, end_j, increase_j):
+                #Changing how the matrix is read according to the orientation
+                if(rotation == 0 or rotation == 2):                        
+                    valid = matrix[i][j] == '*'
+                else:
+                    valid = matrix[j][i] == '*'
 
-                for j in range(begin_j, end_j, increase_j):
-                    if (matrix[i][j] == '*'):
-                        #print("A pos added in ", pos)
-                        positions.append(pos.copy())
-                    pos[0]+=size
+                if(valid):
+                    positions.append(pos.copy())
 
-                pos[1]+=size
+                pos[0]+=size
 
-        elif(rotation == 1 or rotation == 3):
-            if(rotation == 1):
-                begin_i = 0
-                end_i = c
-                begin_j = r-1
-                end_j = -1
-                increase_j = -1
-            else:
-                begin_i = c-1
-                end_i = -1
-                increase_i = -1
-                begin_j = 0
-                end_j = r
-            for i in range(begin_i, end_i, increase_i):
-                pos[0] = start_x
+            pos[1]+=size
 
-                for j in range(begin_j, end_j, increase_j):
-                    if(matrix[j][i] == '*'):
-                        positions.append(pos.copy())
-                        #print("A pos added in ", pos)
-                    pos[0]+=size
-
-                pos[1]+=size
-                
         return positions
 
     def getPositionsMesh(self, size, width, height, start_x, start_y):

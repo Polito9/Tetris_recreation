@@ -38,10 +38,10 @@ movement_delay_right = 0
 movement_delay_down = 0
 
 #The current block falling for testing
-block = Block.Block("T", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X+GRID_WIDTH, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
+block = Block.Block("L", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X+GRID_WIDTH, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
 
 #Test block
-pos = figureMannager.getPositions(block.type_, SIZE_BLOCK, block.pos_x, block.pos_y, 0)
+pos = figureMannager.getPositions(block.type_, SIZE_BLOCK, block.pos_x, block.pos_y, 3)
 
 for p in pos:
     #print(p)
