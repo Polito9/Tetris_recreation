@@ -16,11 +16,13 @@ class Block:
         self.max_pos_x = max_pos_x
         self.max_pos_y = max_pos_y
         self.size = size
+        '''
         if(type_ == 'O' or type_ == 'L' or type_ == 'T' or type_ == 'S'):
             self.left_part = size*2
         elif(type_ == 'I' or type_ == 'J' or type_ == 'Z'):
             self.left_part = size
-    
+        '''
+        
     def setPos_x(self, pos_x):
         if(pos_x > self.max_pos_x-self.left_part):
             self.pos_x = self.max_pos_x-self.left_part
