@@ -8,6 +8,7 @@ class Block:
     max_pos_x = 0
     max_pos_y = 0
     size = 0
+    rotation = 0
     
     def __init__(self, type_, pos_x, pos_y, max_pos_x, max_pos_y, size):
         self.type_ = type_
@@ -22,7 +23,14 @@ class Block:
         elif(type_ == 'I' or type_ == 'J' or type_ == 'Z'):
             self.left_part = size
         '''
-        
+
+    def setRotation(self, rotation):
+        if(rotation>=4):
+            self.rotation = 0
+        else:
+            self.rotation = rotation
+
+    #Provitional detection of exit of the grid 
     def setPos_x(self, pos_x):
         if(pos_x > self.max_pos_x-self.left_part):
             self.pos_x = self.max_pos_x-self.left_part
@@ -37,3 +45,4 @@ class Block:
             #print("It has leaved the zone")
         else:
             self.pos_y = pos_y
+    

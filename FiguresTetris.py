@@ -24,7 +24,7 @@ class FiguresTetris:
         #Managing the rotation of the piece by changing how the matrix of the file is readed
         r = (len(matrix))
         c = (len(matrix[0]))-1 #Because it detects another character in every line
-        print(r, c)
+        #print(r, c)
         
         #The indicators of where to begin and end the loops
         begin_i, end_i = 0, 0
