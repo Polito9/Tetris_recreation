@@ -3,7 +3,6 @@ import FiguresTetris as fg
 import Colors as color
 import Block
 
-
 #Basic configuration of the window
 WIDTH_SCREEN = 500
 HEIGHT_SCREEN = 700
@@ -38,7 +37,7 @@ movement_delay_right = 0
 movement_delay_down = 0
 
 #The current block falling for testing
-block = Block.Block("T", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X+GRID_WIDTH, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
+block = Block.Block("L", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
 
 '''
 #Test block
@@ -49,6 +48,9 @@ for p in pos:
     pygame.draw.rect(screen, color.YELLOW, p, 0)
     pygame.draw.rect(screen, color.WHITE, p, 1, 0)
 '''
+
+#The grid collection of lines to draw
+grid = figureMannager.getPositionsMesh(SIZE_BLOCK, GRID_WIDTH, GRID_HEIGHT, GRID_X, GRID_Y)
 
 while running:
     #Handling inputs
@@ -93,13 +95,12 @@ while running:
     screen.fill(color.BLACK)
     
     #Drawing the mesh
-    pos = figureMannager.getPositionsMesh(SIZE_BLOCK, GRID_WIDTH, GRID_HEIGHT, GRID_X, GRID_Y)
-    for p in pos:
+    
+    for p in grid:
         pygame.draw.line(screen, color.WHITE, p[0], p[1], 2)
     
     #Draws the figure in the actual position
     pos = figureMannager.getPositions(block.type_, SIZE_BLOCK, block.pos_x, block.pos_y, block.rotation)
-    
     for p in pos:
         #print(p)
         pygame.draw.rect(screen, color.YELLOW, p, 0)

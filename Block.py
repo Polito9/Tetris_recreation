@@ -1,48 +1,63 @@
+import FiguresTetris as fg
+
 class Block:
     type_ = 'O'
     pos_x = 0
     pos_y = 0
-    left_part = 0
-    down_part = 0
-    right_part = 0
     max_pos_x = 0
     max_pos_y = 0
+    min_pos_y = 0
+    min_pos_y = 0
     size = 0
     rotation = 0
     
-    def __init__(self, type_, pos_x, pos_y, max_pos_x, max_pos_y, size):
+    def __init__(self, type_, pos_x, pos_y, min_pos_x, max_pos_x, min_pos_y, max_pos_y, size):
         self.type_ = type_
         self.pos_x = pos_x
         self.pos_y = pos_y
         self.max_pos_x = max_pos_x
+        self.min_pos_x = min_pos_x
         self.max_pos_y = max_pos_y
+        self.min_pos_y = min_pos_y
         self.size = size
-        '''
-        if(type_ == 'O' or type_ == 'L' or type_ == 'T' or type_ == 'S'):
-            self.left_part = size*2
-        elif(type_ == 'I' or type_ == 'J' or type_ == 'Z'):
-            self.left_part = size
-        '''
 
     def setRotation(self, rotation):
         if(rotation>=4):
             self.rotation = 0
         else:
             self.rotation = rotation
+            
 
-    #Provitional detection of exit of the grid 
+    #Detection of exit of the grid 
     def setPos_x(self, pos_x):
-        if(pos_x > self.max_pos_x-self.left_part):
-            self.pos_x = self.max_pos_x-self.left_part
-            #print("It has leaved the zone")
+        right_part = 0
+        #Simulating the borders of the figure
+        fig = fg.FiguresTetris()
+        pos = fig.getPositions(self.type_, self.size, pos_x, self.pos_y, self.rotation)
+        for p in pos:
+            right_part = max([right_part, p[0]+p[2]])
+        
+        #Checking if the figure will exceed the allowed dimensions
+        if(pos_x < self.min_pos_x):
+            self.pos_x = self.min_pos_x
+            #print("It touched the left")
+        elif(right_part > self.max_pos_x):
+            self.pos_x = pos_x - self.size
+            #print("It touched the right")
         else:
             self.pos_x = pos_x
-            print(pos_x)
-
+    
     def setPos_y(self, pos_y):
-        if(pos_y> self.max_pos_y):
-            self.pos_y = self.max_pos_y
-            #print("It has leaved the zone")
+        down_part = 0
+        
+        #Simulating the borders of the figure
+        fig = fg.FiguresTetris()
+        pos = fig.getPositions(self.type_, self.size, self.pos_x, pos_y, self.rotation)
+        for p in pos:
+            down_part = max([down_part, p[1]+p[2]])
+        
+        #Checing if the figure will exceed the allowed dimensions
+        if(down_part>self.max_pos_y):
+            self.pos_y = self.max_pos_y - ( -pos_y)
         else:
             self.pos_y = pos_y
-    
