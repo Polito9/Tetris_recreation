@@ -1,6 +1,20 @@
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+
 RED = (250, 127, 101)
 YELLOW = (250, 248, 101)
 GREEN = (139, 250, 101)
 BLUE = (101, 110, 250)
+PINK = (240, 131, 250)
+ORANGE = (250, 196, 131)
+TURQUOISE = (128, 245, 232)
+
+REFERENCE = {
+    'I': RED,
+    'J': YELLOW,
+    'L': GREEN,
+    'O': BLUE,
+    'S': PINK,
+    'T': ORANGE,
+    'Z': TURQUOISE,
+}

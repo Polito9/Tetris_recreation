@@ -37,7 +37,7 @@ movement_delay_right = 0
 movement_delay_down = 0
 
 #The current block falling for testing
-block = Block.Block("Z", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
+block = Block.Block("I", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
 
 '''
 #Test block
@@ -102,7 +102,7 @@ while running:
     pos = figureMannager.getPositions(block.type_, SIZE_BLOCK, block.pos_x, block.pos_y, block.rotation)
     for p in pos:
         #print(p)
-        pygame.draw.rect(screen, color.YELLOW, p, 0)
+        pygame.draw.rect(screen, block.color, p, 0)
         pygame.draw.rect(screen, color.WHITE, p, 1, 0)
     
     #Updates the display

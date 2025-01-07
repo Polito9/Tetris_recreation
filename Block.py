@@ -1,4 +1,5 @@
 import FiguresTetris as fg
+import Colors
 
 class Block:
     type_ = 'O'
@@ -10,7 +11,8 @@ class Block:
     min_pos_y = 0
     size = 0
     rotation = 0
-    
+    color = Colors.WHITE
+
     def __init__(self, type_, pos_x, pos_y, min_pos_x, max_pos_x, min_pos_y, max_pos_y, size):
         self.type_ = type_
         self.pos_x = pos_x
@@ -20,6 +22,7 @@ class Block:
         self.max_pos_y = max_pos_y
         self.min_pos_y = min_pos_y
         self.size = size
+        self.color = Colors.REFERENCE[type_] #References the color according to the type of piece
 
     def setRotation(self, rotation):
         if(rotation>=4):
