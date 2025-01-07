@@ -37,7 +37,7 @@ movement_delay_right = 0
 movement_delay_down = 0
 
 #The current block falling for testing
-block = Block.Block("L", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
+block = Block.Block("Z", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
 
 '''
 #Test block
@@ -95,7 +95,6 @@ while running:
     screen.fill(color.BLACK)
     
     #Drawing the mesh
-    
     for p in grid:
         pygame.draw.line(screen, color.WHITE, p[0], p[1], 2)
     
