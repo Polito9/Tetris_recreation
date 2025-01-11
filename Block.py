@@ -12,6 +12,7 @@ class Block:
     size = 0
     rotation = 0
     color = Colors.WHITE
+    in_ground = False
 
     def __init__(self, type_, pos_x, pos_y, min_pos_x, max_pos_x, min_pos_y, max_pos_y, size):
         self.type_ = type_
@@ -32,6 +33,8 @@ class Block:
         
         self.setPos_x(self.pos_x)
         self.setPos_y(self.pos_y)
+
+        self.in_ground = False
             
 
     #Detection of exit of the grid 
@@ -48,10 +51,10 @@ class Block:
         #Checking if the figure will exceed the allowed dimensions
         if(pos_x < self.min_pos_x):
             self.pos_x = self.min_pos_x
-            print("It touched the left")
+            #print("It touched the left")
         elif(right_part > self.max_pos_x):
             self.pos_x = self.max_pos_x - (right_part-pos_x)
-            print("It touched the right")
+            #print("It touched the right")
         else:
             self.pos_x = pos_x
     
@@ -70,6 +73,7 @@ class Block:
         #Checing if the figure will exceed the allowed dimensions
         if(down_part>=self.max_pos_y):
             self.pos_y = self.max_pos_y - (down_part -pos_y)
-            print("It touched the bottom")
+            self.in_ground = True
         else:
             self.pos_y = pos_y
+            self.in_ground = False

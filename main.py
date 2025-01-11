@@ -37,7 +37,12 @@ movement_delay_right = 0
 movement_delay_down = 0
 
 #The current block falling for testing
-block = Block.Block("I", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
+block = Block.Block("Z", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
+
+#Variables for the delay in freezing the piece
+TIME_FREEZE = 1000
+first_contat_ground_time = 0
+aux_bool_freeze = True
 
 '''
 #Test block
@@ -49,10 +54,26 @@ for p in pos:
     pygame.draw.rect(screen, color.WHITE, p, 1, 0)
 '''
 
+
 #The grid collection of lines to draw
 grid = figureMannager.getPositionsMesh(SIZE_BLOCK, GRID_WIDTH, GRID_HEIGHT, GRID_X, GRID_Y)
 
 while running:
+    #Events
+    for event in pygame.event.get():
+        #Handling only one input of the up button
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_UP:
+                block.setRotation(block.rotation+1)
+                print(block.rotation)
+        #To handle the exit of the game
+        if event.type == pygame.QUIT:
+            running = False
+        
+        #Updating the fall of the piece
+        if event.type == pygame.USEREVENT:
+            block.setPos_y(block.pos_y + SIZE_BLOCK)
+
     #Handling inputs
     keys = pygame.key.get_pressed()
     
@@ -75,20 +96,7 @@ while running:
         if(movement_delay_down>=COUNTER_DELAY):
             block.setPos_y(block.pos_y + SIZE_BLOCK)
             movement_delay_down = 0
-    #Events
-    for event in pygame.event.get():
-        #Handling only one input of the up button
-        if event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP:
-                block.setRotation(block.rotation+1)
-                print(block.rotation)
-        #To handle the exit of the game
-        if event.type == pygame.QUIT:
-            running = False
-        
-        #Updating the fall of the piece
-        if event.type == pygame.USEREVENT:
-            block.setPos_y(block.pos_y + SIZE_BLOCK)
+    
 
     
     #Refresh the screen to move the blocks
@@ -98,6 +106,19 @@ while running:
     for p in grid:
         pygame.draw.line(screen, color.WHITE, p[0], p[1], 2)
     
+    #The logic for freezing the piece when it tocuhes the ground after certain time
+    if(block.in_ground and aux_bool_freeze):
+        #print("It tocuhed the ground")
+        first_contat_ground_time = pygame.time.get_ticks()
+        aux_bool_freeze = False
+    
+    if(not block.in_ground):
+        aux_bool_freeze = True
+
+    if(block.in_ground and (not aux_bool_freeze) and pygame.time.get_ticks()>=first_contat_ground_time+TIME_FREEZE):
+        print("It will freeze")
+        block.freezed = True
+                
     #Draws the figure in the actual position
     pos = figureMannager.getPositions(block.type_, SIZE_BLOCK, block.pos_x, block.pos_y, block.rotation)
     for p in pos:
