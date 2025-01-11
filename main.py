@@ -119,6 +119,7 @@ while running:
 
     if(block.in_ground and (not aux_bool_freeze) and pygame.time.get_ticks()>=first_contat_ground_time+time_to_freeze):
         print("It will freeze")
+        block.freezed = True
         aux_bool_freeze = True
                 
     #Draws the figure in the actual position
