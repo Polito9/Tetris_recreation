@@ -40,7 +40,8 @@ movement_delay_down = 0
 block = Block.Block("Z", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
 
 #Variables for the delay in freezing the piece
-TIME_FREEZE = 1000
+START_FREEZE_TIME = 1100
+time_to_freeze = START_FREEZE_TIME
 first_contat_ground_time = 0
 aux_bool_freeze = True
 
@@ -114,10 +115,11 @@ while running:
     
     if(not block.in_ground):
         aux_bool_freeze = True
+        
 
-    if(block.in_ground and (not aux_bool_freeze) and pygame.time.get_ticks()>=first_contat_ground_time+TIME_FREEZE):
+    if(block.in_ground and (not aux_bool_freeze) and pygame.time.get_ticks()>=first_contat_ground_time+time_to_freeze):
         print("It will freeze")
-        block.freezed = True
+        aux_bool_freeze = True
                 
     #Draws the figure in the actual position
     pos = figureMannager.getPositions(block.type_, SIZE_BLOCK, block.pos_x, block.pos_y, block.rotation)

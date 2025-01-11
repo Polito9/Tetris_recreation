@@ -57,6 +57,8 @@ class Block:
             #print("It touched the right")
         else:
             self.pos_x = pos_x
+        
+        self.in_ground = False
     
     def setPos_y(self, pos_y):
         down_part = 0
