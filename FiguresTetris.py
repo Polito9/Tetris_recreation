@@ -1,10 +1,9 @@
 class FiguresTetris:
     directions = {}
+    figsNames = ['O', 'I', 'J', 'L', 'S', 'T', 'Z']
 
-    def __init__(self):
-        figsNames = ['O', 'I', 'J', 'L', 'S', 'T', 'Z']
-        
-        for name in figsNames:
+    def __init__(self):        
+        for name in self.figsNames:
             self.directions[name] = "figures\\" + name +".txt"
     
     def getPositions(self, type_, size, start_x, start_y, rotation):

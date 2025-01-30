@@ -1,6 +1,7 @@
 import pygame
 import FiguresTetris as fg
 import Colors as color
+import RandomFigures as rf
 import Block
 
 #Basic configuration of the window
@@ -30,14 +31,23 @@ GRID_HEIGHT = 20*SIZE_BLOCK
 GRID_X =160
 GRID_Y =40
 
+#For the queue of pieces
+random_figs = rf.RandomFigures()
+QUEUE_SIZE = 4
+queue = list(range(QUEUE_SIZE))
+random_figs.initialize_queue(queue, QUEUE_SIZE)
+print("Initial queue: ", queue)
+
 #The delay in the velocity of the block
 movement_delay_left = 0
 COUNTER_DELAY = 3
 movement_delay_right = 0
 movement_delay_down = 0
 
-#The current block falling for testing
-block = Block.Block("Z", GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK, GRID_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
+#The current block falling
+INITIAL_X = GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK
+INITIAL_Y = GRID_Y
+block = Block.Block('Z', INITIAL_X, INITIAL_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
 
 #Variables for the delay in freezing the piece
 START_FREEZE_TIME = 1100
@@ -45,7 +55,9 @@ time_to_freeze = START_FREEZE_TIME
 first_contat_ground_time = 0
 aux_bool_freeze = True
 
+
 '''
+s j o i t  l
 #Test block
 pos = figureMannager.getPositions(block.type_, SIZE_BLOCK, block.pos_x, block.pos_y, 3)
 
