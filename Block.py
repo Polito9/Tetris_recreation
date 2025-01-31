@@ -26,6 +26,10 @@ class Block:
         self.size = size
         self.color = Colors.REFERENCE[type_] #References the color according to the type of piece
 
+    def set_type(self, type_):
+        self.type_ = type_
+        self.color = Colors.REFERENCE[type_]
+
     def setRotation(self, rotation):
         if(not self.freezed):
             if(rotation>=4):

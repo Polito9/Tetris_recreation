@@ -38,6 +38,10 @@ queue = list(range(QUEUE_SIZE))
 random_figs.initialize_queue(queue, QUEUE_SIZE)
 print("Initial queue: ", queue)
 
+
+#To save the frozen pieces
+placed_figures = []
+
 #The delay in the velocity of the block
 movement_delay_left = 0
 COUNTER_DELAY = 3
@@ -47,10 +51,10 @@ movement_delay_down = 0
 #The current block falling
 INITIAL_X = GRID_X+(GRID_WIDTH/2) - SIZE_BLOCK
 INITIAL_Y = GRID_Y
-block = Block.Block('Z', INITIAL_X, INITIAL_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
+block = Block.Block(queue[0], INITIAL_X, INITIAL_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
 
 #Variables for the delay in freezing the piece
-START_FREEZE_TIME = 1100
+START_FREEZE_TIME = 900
 time_to_freeze = START_FREEZE_TIME
 first_contat_ground_time = 0
 aux_bool_freeze = True
@@ -109,7 +113,6 @@ while running:
         if(movement_delay_down>=COUNTER_DELAY):
             block.setPos_y(block.pos_y + SIZE_BLOCK)
             movement_delay_down = 0
-    
 
     
     #Refresh the screen to move the blocks
@@ -118,7 +121,14 @@ while running:
     #Drawing the mesh
     for p in grid:
         pygame.draw.line(screen, color.WHITE, p[0], p[1], 2)
-    
+
+    #Draws the figures that are already frozen
+    for b in placed_figures:
+        pos = figureMannager.getPositions(b.type_, SIZE_BLOCK, b.pos_x, b.pos_y, b.rotation)
+        for p in pos:
+            pygame.draw.rect(screen, b.color, p, 0)
+            pygame.draw.rect(screen, color.WHITE, p, 1, 0)
+
     #The logic for freezing the piece when it tocuhes the ground after certain time
     if(block.in_ground and aux_bool_freeze):
         #print("It tocuhed the ground")
@@ -131,7 +141,11 @@ while running:
 
     if(block.in_ground and (not aux_bool_freeze) and pygame.time.get_ticks()>=first_contat_ground_time+time_to_freeze):
         print("It will freeze")
-        block.freezed = True
+        b = block
+        placed_figures.append(b)
+        random_figs.generate_next_piece(queue, QUEUE_SIZE)
+        block = Block.Block(queue[0], INITIAL_X, INITIAL_Y, GRID_X, GRID_X+GRID_WIDTH, GRID_Y, GRID_Y+GRID_HEIGHT, SIZE_BLOCK)
+        #block.freezed = True
         aux_bool_freeze = True
                 
     #Draws the figure in the actual position
@@ -141,6 +155,7 @@ while running:
         pygame.draw.rect(screen, block.color, p, 0)
         pygame.draw.rect(screen, color.WHITE, p, 1, 0)
     
+
     #Updates the display
     pygame.display.update()
     
