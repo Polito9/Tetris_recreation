@@ -1,28 +1,31 @@
 class FiguresTetris:
     directions = {}
     figsNames = ['O', 'I', 'J', 'L', 'S', 'T', 'Z']
-
+    matrix = []
     def __init__(self):        
         for name in self.figsNames:
             self.directions[name] = "figures\\" + name +".txt"
     
+    def getMatrixFromFile(self, type_):
+        file = open(self.directions[type_])
+        self.matrix = []
+        for line in file:#Every line
+            self.matrix.append(line)
+        
+        file.close()
+
+
     def getPositions(self, type_, size, start_x, start_y, rotation):
         # Returns a list of lists with size 4 that are the coordinates of start of the figure to draw and the size
         # This list can be used directly into the draw.rect function of pygame
         positions = []
-        file = open(self.directions[type_])
-
+        self.getMatrixFromFile(type_)
         #Reading the file and asigning where the rectangles are going to be drawn
         pos = [start_x, start_y, size, size]
-        matrix = []
-        for line in file:#Every line
-            matrix.append(line)
         
-        file.close()
-
         #Managing the rotation of the piece by changing how the matrix of the file is readed
-        r = (len(matrix))
-        c = (len(matrix[0]))-1 #Because it detects another character in every line
+        r = (len(self.matrix))
+        c = (len(self.matrix[0]))-1 #Because it detects another character in every line
         #print(r, c)
         
         #The indicators of where to begin and end the loops
@@ -63,9 +66,9 @@ class FiguresTetris:
             for j in range(begin_j, end_j, increase_j):
                 #Changing how the matrix is read according to the orientation
                 if(rotation == 0 or rotation == 2):                        
-                    valid = matrix[i][j] == '*'
+                    valid = self.matrix[i][j] == '*'
                 else:
-                    valid = matrix[j][i] == '*'
+                    valid = self.matrix[j][i] == '*'
 
                 if(valid):
                     positions.append(pos.copy())
